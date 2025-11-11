@@ -1,161 +1,472 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky Store</title>
+    <title>Sky Store - Premium Apps</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
         }
-        header {
-            background-color: #f7f5f0;
-            color: #bfa14a;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00111f 0%, #003366 40%, #000000 100%);
+            min-height: 100vh;
             padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
             text-align: center;
-            font-size: 2em;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
         }
-        .search-bar {
-            display: flex;
-            justify-content: center;
-            margin: 20px;
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 150, 255, 0.6);
         }
-        .search-bar input {
-            width: 50%;
-            padding: 10px;
-            font-size: 1em;
-            border: 2px solid #bfa14a;
-            border-radius: 5px;
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
         }
-        .catalog {
+
+        .app-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            padding: 20px;
+            margin-bottom: 40px;
         }
-        .-card {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            background-color: #fff;
+
+        .app-card {
+            background: rgba(0, 50, 100, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
-            padding-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 180, 255, 0.2);
+            animation: fadeInUp 0.8s ease;
         }
-        .-card:hover {
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            background: rgba(0, 120, 255, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 150, 255, 0.4);
+        }
+
+        .app-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .view-btn {
+            background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .view-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 180, 255, 0.5);
         }
-        .-card img {
+
+        .contact-section {
+            text-align: center;
+            margin: 40px 0;
+            animation: fadeIn 1s ease;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, #0066ff 0%, #00ccff 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
         }
-        .-card h3 {
-            color: #bfa14a;
-            margin: 10px 0 5px 0;
+
+        .modal-content {
+            background: linear-gradient(135deg, #001f3f 0%, #000000 100%);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            position: relative;
+            animation: slideDown 0.3s ease;
+            box-shadow: 0 10px 50px rgba(0, 150, 255, 0.5);
+            color: #fff;
         }
-        .-card p {
-            margin: 0 10px;
-            color: #555;
+
+        .close {
+            color: #00c6ff;
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 20px;
         }
+
+        .close:hover {
+            color: #ff4b2b;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2em;
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.2em;
+            opacity: 0.8;
+            color: #00ccff;
+        }
+
+        .modal-content p {
+            margin: 12px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .notes {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 80, 150, 0.2);
+            border-radius: 10px;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 600px) {
-            .search-bar input {
-                width: 80%;
-            }
+            h1 { font-size: 2em; }
+            .app-list { grid-template-columns: 1fr; }
+            .modal-content { margin: 10% 5%; padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <header>Sky Store</header>
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cari ..." onkeyup="search()">
+    <div class="container">
+        <header>
+            <h1>📱 Apk Premium By Sky Store</h1>
+            <p class="subtitle">Premium App Murah dan Terpercaya</p>
+        </header>
+
+        <div class="app-list">
+            <div class="app-card" onclick="openModal('alight')">
+                <h3>Alight Motion</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('netflix')">
+                <h3>Netflix</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('viu')">
+                <h3>Viu</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('spotify')">
+                <h3>Spotify</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('youtube')">
+                <h3>Apple Music</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('disney')">
+                <h3>Disney+</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('canva')">
+                <h3>Canva Pro</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('vidio')">
+                <h3>Vidio Premium</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+            <div class="app-card" onclick="openModal('wetv')">
+                <h3>WeTV</h3>
+                <button class="view-btn">Lihat List</button>
+            </div>
+        </div>
+
+        <!-- ✅ Tombol Contact Owner -->
+        <div class="contact-section">
+            <a href="https://wa.me/6285929809036?text=Halo%20Admin%20Sky%20Store,%20saya%20ingin%20beli%20akun%20premium" target="_blank" class="contact-btn">Contact Owner 💬</a>
+        </div>
+
+        <footer>
+            <p>© 2025 Sky Store — Gunakan Mode Desktop untuk Tampilan Terbaik</p>
+        </footer>
     </div>
-    <div class="catalog" id="catalog">
-        
-        <div class="-card">
-            <img src="https://via.placeholder.com/300x200?text=Panel+1GB" alt="Panel 1GB">
-            <h3>Panel Pterodactyl 1GB</h3>
-            <p>Paket panel 1GB untuk server  ringan.</p>
-            <p><strong>Rp 1.000</strong></p>
+
+    <!-- Semua Modal Tetap Sama -->
+    <!-- Contoh satu, sisanya sama dengan milikmu -->
+<!-- Modals -->
+    <div class="modal" id="modal-alight">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('alight')">&times;</span>
+            <h2>Alight Motion</h2>
+            <div class="divider">♦────♣────♦</div>
+            <p>♪ 1 Tahun Sharing : 5k</p>
+            <p>♪ 1 Tahun Privat : 7k</p>
+            <div class="notes">
+                ♠ Notes ♠<br>
+                - Sharing only acc seller<br>
+                - Private acc seller / buyer
+            </div>
         </div>
-            <a href="https://wa.me/6285929809036?text=Halo%20saya%20ingin%20membeli%20Panel%20Pterodactyl%201GB" 
-               style="display:inline-block;margin-top:10px;padding:10px 15px;background-color:#bfa14a;color:white;text-decoration:none;border-radius:5px;">
-               Hubungi WhatsApp
-            </a>
-
-        <div class="-card">
-            <img src="https://via.placeholder.com/300x200?text=Panel+2GB" alt="Panel 2GB">
-            <h3>Panel Pterodactyl 2GB</h3>
-            <p>Paket panel 2GB untuk server  sedang.</p>
-            <p><strong>Rp 2.000</strong></p>
-        </div>
-            <a href="https://wa.me/6285929809036?text=Halo%20saya%20ingin%20membeli%20Panel%20Pterodactyl%202GB" 
-               style="display:inline-block;margin-top:10px;padding:10px 15px;background-color:#bfa14a;color:white;text-decoration:none;border-radius:5px;">
-               Hubungi WhatsApp
-            </a>
-
-        <div class="-card">
-            <img src="https://via.placeholder.com/300x200?text=Panel+5GB" alt="Panel 5GB">
-            <h3>Panel Pterodactyl 5GB</h3>
-            <p>Paket panel 5GB untuk server  besar.</p>
-            <p><strong>Rp 5.000</strong></p>
-        </div>
-            <a href="https://wa.me/6285929809036?text=Halo%20saya%20ingin%20membeli%20Panel%20Pterodactyl%205GB" 
-               style="display:inline-block;margin-top:10px;padding:10px 15px;background-color:#bfa14a;color:white;text-decoration:none;border-radius:5px;">
-               Hubungi WhatsApp
-            </a>
-
-        <div class="-card">
-            <img src="https://via.placeholder.com/300x200?text=Panel+10GB" alt="Panel 10GB">
-            <h3>Panel Pterodactyl 10GB</h3>
-            <p>Paket panel 10GB untuk server besar dan banyak player.</p>
-            <p><strong>Rp 10.000</strong></p>
-        </div>
-            <a href="https://wa.me/6285929809036?text=Halo%20saya%20ingin%20membeli%20Panel%20Pterodactyl%2010GB" 
-               style="display:inline-block;margin-top:10px;padding:10px 15px;background-color:#bfa14a;color:white;text-decoration:none;border-radius:5px;">
-               Hubungi WhatsApp
-            </a>
-
-        <div class="-card">
-            <img src="https://via.placeholder.com/300x200?text=Panel+Unlimited" alt="Panel Unlimited">
-            <h3>Panel Pterodactyl Unlimited</h3>
-            <p>Paket panel tanpa batas untuk kebutuhan premium.</p>
-            <p><strong>Rp 12.000</strong></p>
-        </div>
-            <a href="https://wa.me/6285929809036?text=Halo%20saya%20ingin%20membeli%20Panel%20Pterodactyl%20Unlimited" 
-               style="display:inline-block;margin-top:10px;padding:10px 15px;background-color:#bfa14a;color:white;text-decoration:none;border-radius:5px;">
-               Hubungi WhatsApp
-            </a>
-
-
-        <!--
-        <div class="-card">
-            <img src="https://via.placeholder.com/300x200" alt="">
-            <h3>Nama </h3>
-            <p>Deskripsi singkat ...</p>
-            <p><strong>Rp 100.000</strong></p>
-        </div>
-            <a href="https://wa.me/6285929809036?text=Halo%20saya%20ingin%20membeli%20Nama%20" 
-               style="display:inline-block;margin-top:10px;padding:10px 15px;background-color:#bfa14a;color:white;text-decoration:none;border-radius:5px;">
-               Hubungi WhatsApp
-            </a>
-
-        -->
     </div>
+
+    <div class="modal" id="modal-netflix">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('netflix')">&times;</span>
+            <h2>♣ Netflix ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p><strong>Harian & Mingguan</strong></p>
+            <p>♪ 1 Hari 1P1U : 5k</p>
+            <p>♪ 3 Hari 1P1U : 6k</p>
+            <p>♪ 7 Hari 1P1U : 12k</p>
+            <p>♪ 1 Hari 1P2U : 5k</p>
+            <p>♪ 3 Hari 1P2U : 7k</p>
+            <p>♪ 7 Hari 1P2U : 15k</p>
+            <p><strong>Bulanan 1P1U</strong></p>
+            <p>♪ 1 Bulan : 25k</p>
+            <p>♪ 2 Bulan : 44k</p>
+            <p>♪ 3 Bulan : 65k</p>
+            <p><strong>Bulanan 1P2U</strong></p>
+            <p>♪ 1 Bulan : 17k</p>
+            <p>♪ 2 Bulan : 34k</p>
+            <p>♪ 3 Bulan : 50k</p>
+            <p><strong>Semi dua device</strong></p>
+            <p>♪ 1 Minggu : 20k</p>
+            <p>♪ 1 Bulan : 32k</p>
+            <p>♪ 2 Bulan : 60k</p>
+            <p>♪ 3 Bulan : 85k</p>
+            <div class="notes">
+                Notes:<br>
+                - Jangan sering login & logout<br>
+                - Jangan otak-atik akun<br>
+                - Ini versi Blackmarket, jadi bisa saja ada kendala
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-viu">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('viu')">&times;</span>
+            <h2>♣ VIU ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p>ᰔ 1 Bulan Privat : 2K</p>
+            <p>ᰔ 3 Bulan Privat : 4k</p>
+            <p>ᰔ 1 Tahun Privat : 8k</p>
+            <div class="notes">
+                Notes:<br>
+                - Bergaransi (S&K berlaku)
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-spotify">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('spotify')">&times;</span>
+            <h2>♣ Spotify ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p>♪ 1 Bulan Premium : 8k</p>
+            <p>♪ 2 Bulan Premium : 15k</p>
+            <p>♪ 3 Bulan Premium : 22k</p>
+            <p>♪ 6 Bulan Premium : 42k</p>
+            <p>♪ 1 Tahun Premium : 80k</p>
+            <div class="notes">
+                Notes:<br>
+                - Akun pribadi<br>
+                - Bisa ganti password<br>
+                - Garansi aktif
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-youtube">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('youtube')">&times;</span>
+            <h2>♣ Apple Music ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p><strong>Family Plan</strong></p>
+            <p>♪ 1 Bulan : 8k</p>
+            <p><strong>Individual Plan</strong></p>
+            <p>♪ 1 Bulan : 13k</p>
+            <p><strong>Family Head</strong>
+            <p>♪ 1 Bulan : 12K </p>
+            <p>♪ 3 Bulan : 32K </p>
+            <div class="notes">
+                Notes:<br>
+                - FamHead Bisa Invit3 5 Anggota<br>
+                - FamPlan Maksimal Join 2×<br>
+                - Apple ID Limit? -- No Reff!
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-disney">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('disney')">&times;</span>
+            <h2>♣ Disney+ Hotstar ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p>♪ 1 Bulan Premium : 8k</p>
+            <p>♪ 3 Bulan Premium : 22k</p>
+            <p>♪ 6 Bulan Premium : 40k</p>
+            <p>♪ 1 Tahun Premium : 75k</p>
+            <div class="notes">
+                Notes:<br>
+                - 4 devices<br>
+                - Quality HD/4K<br>
+                - All content unlocked
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-canva">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('canva')">&times;</span>
+            <h2>♣ Canva Pro ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p>♪ 1 Bulan : 5k</p>
+            <p>♪ 3 Bulan : 10k</p>
+            <p>♪ 6 Bulan : 15k</p>
+            <p>♪ 1 Tahun : 20K</p>
+            <p>♪ LifeTime : 23K</p>
+            <div class="notes">
+                Notes:<br>
+                - LifeTime Garansi 6 Bulan<br>
+                - Durasi Di atas 1 Bulan Renew Tiap Bulan<br>
+                - Send Email Cust<br>
+                - LifeTime Tidak bisa di tambah dengan design
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-vidio">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('vidio')">&times;</span>
+            <h2>♣ Vidio Premium ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p>♪ 1 Bulan : 12k</p>
+            <p>♪ 3 Bulan : 33k</p>
+            <p>♪ 6 Bulan : 62k</p>
+            <div class="notes">
+                Notes:<br>
+                - Live sports<br>
+                - Original series<br>
+                - Tanpa iklan
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-wetv">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('wetv')">&times;</span>
+            <h2>♣ WeTV ♣</h2>
+            <div class="divider">♦────♠────♦</div>
+            <p>♪ 1 Bulan VIP : 5k</p>
+            <p>♪ 3 Bulan VIP : 13k</p>
+            <p>♪ 6 Bulan VIP : 25k</p>
+            <p>♪ 1 Tahun VIP : 45k</p>
+            <div class="notes">
+                Notes:<br>
+                - Drama Asia<br>
+                - Early access<br>
+                - HD quality
+            </div>
+        </div>
+    </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- sisanya tetap seperti modal yang kamu tulis sebelumnya -->
+    <!-- Tidak dihapus biar lengkap -->
 
     <script>
-        function search() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('-card');
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                cards[i].style.display = title.includes(input) ? "" : "none";
+        function openModal(app) {
+            document.getElementById('modal-' + app).style.display = 'block';
+        }
+
+        function closeModal(app) {
+            document.getElementById('modal-' + app).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
         }
     </script>
