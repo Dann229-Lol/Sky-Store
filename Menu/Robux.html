@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Robux Sky Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .price-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #0f3460;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .robux-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .price-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .price-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: white;
+            border-radius: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(15, 52, 96, 0.4);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .price-item:hover::before {
+            left: 100%;
+        }
+
+        .price-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(15, 52, 96, 0.6);
+        }
+
+        .popular {
+            border: 3px solid #ffd700;
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #ffd700;
+            color: #1a1a2e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .robux-amount {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .robux-icon-small {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .robux-text {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .price-tag {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .price {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .buy-button {
+            margin-top: 10px;
+            padding: 8px 20px;
+            background: white;
+            color: #0f3460;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .buy-button:hover {
+            background: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .bonus-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .price-container {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .price-item {
+                padding: 20px;
+            }
+
+            .robux-text {
+                font-size: 1.2em;
+            }
+
+            .price {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="price-container">
+        <div class="header">
+            <h1>
+                <div class="robux-icon">R$</div>
+                Daftar Harga Robux
+            </h1>
+            <p>Pilih paket Robux yang sesuai untuk kamu!</p>
+        </div>
+
+        <div class="price-list">
+            <div class="price-item" onclick="buyRobux(100, 15000)">
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">100 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 15.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item" onclick="buyRobux(200, 30000)">
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">200 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 30.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item popular" onclick="buyRobux(400, 60000)">
+                <div class="popular-badge">⭐ POPULER</div>
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">400 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 60.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item" onclick="buyRobux(800, 120000)">
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">800 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 120.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item" onclick="buyRobux(1700, 250000)">
+                <div class="bonus-badge">🎁 BONUS +20</div>
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">1700 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 250.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item" onclick="buyRobux(4500, 650000)">
+                <div class="bonus-badge">🎁 BONUS +50</div>
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">4500 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 650.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item" onclick="buyRobux(10000, 1400000)">
+                <div class="bonus-badge">🎁 BONUS +100</div>
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">10000 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 1.450.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+
+            <div class="price-item" onclick="buyRobux(22500, 3000000)">
+                <div class="bonus-badge">🎁 BONUS +250</div>
+                <div class="robux-amount">
+                    <div class="robux-icon-small">R$</div>
+                    <div class="robux-text">22500 Robux</div>
+                </div>
+                <div class="price-tag">
+                    <div class="price">Rp 3.250.000</div>
+                    <button class="buy-button">Beli</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function buyRobux(amount, price) {
+            const confirmation = confirm(`Apakah Anda ingin membeli ${amount} Robux seharga Rp ${price.toLocaleString('id-ID')}?`);
+            if (confirmation) {
+                alert(`Terima kasih! Anda memilih paket ${amount} Robux.\nSilakan lanjutkan ke pembayaran.`);
+                // Di sini bisa ditambahkan redirect ke halaman pembayaran
+                // window.location.href = 'payment.html?robux=' + amount + '&price=' + price;
+            }
+        }
+    </script>
+</body>
+</html>
