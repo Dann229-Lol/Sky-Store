@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky Store - Premium Apps</title>
+    <title>Store Menu Navigation</title>
     <style>
         * {
             margin: 0;
@@ -21,54 +21,52 @@
             padding: 20px;
         }
 
-        .main-container {
+        .menu-container {
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 50px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 900px;
+            max-width: 600px;
             width: 100%;
         }
 
-        .header {
+        .logo {
             text-align: center;
             margin-bottom: 40px;
         }
 
-        .header h1 {
+        .logo h1 {
             font-size: 2.5em;
             color: #0f3460;
             margin-bottom: 10px;
         }
 
-        .header p {
+        .logo p {
             color: #666;
             font-size: 1.1em;
         }
 
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .app-item {
+        .menu-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 25px 30px;
+            padding: 20px 25px;
             background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
             color: white;
+            text-decoration: none;
             border-radius: 15px;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(15, 52, 96, 0.4);
-            cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        .app-item::before {
+        .menu-item::before {
             content: '';
             position: absolute;
             top: 0;
@@ -79,466 +77,133 @@
             transition: all 0.3s;
         }
 
-        .app-item:hover::before {
+        .menu-item:hover::before {
             left: 100%;
         }
 
-        .app-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(15, 52, 96, 0.6);
+        .menu-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 6px 20px rgba(15, 52, 96, 0.6);
         }
 
-        .app-content {
+        .menu-icon {
+            font-size: 2em;
+            margin-right: 20px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .menu-content {
             flex: 1;
         }
 
-        .app-name {
-            font-size: 1.4em;
-            font-weight: 700;
+        .menu-title {
+            font-size: 1.3em;
+            font-weight: 600;
             margin-bottom: 5px;
         }
 
-        .app-desc {
+        .menu-description {
             font-size: 0.9em;
             opacity: 0.9;
         }
 
-        .view-button {
-            padding: 10px 25px;
-            background: white;
-            color: #0f3460;
-            border: none;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-left: 15px;
-        }
-
-        .view-button:hover {
-            background: #f0f0f0;
-            transform: scale(1.05);
-        }
-
-        .contact-section {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .contact-btn {
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
-            color: white;
-            text-decoration: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: 600;
-            display: inline-block;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(15, 52, 96, 0.4);
-        }
-
-        .contact-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(15, 52, 96, 0.6);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideDown 0.3s ease;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .close {
-            color: #fff;
-            float: right;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 20px;
-        }
-
-        .close:hover {
-            color: #ff4b2b;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 2em;
-            clear: both;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 15px 0;
-            font-size: 1.2em;
-            opacity: 0.8;
-        }
-
-        .modal-content p {
-            margin: 12px 0;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        .notes {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            font-size: 0.95em;
-            font-style: italic;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
+        .menu-arrow {
+            font-size: 1.5em;
+            margin-left: 20px;
         }
 
         @media (max-width: 600px) {
-            .main-container {
-                padding: 25px 15px;
+            .menu-container {
+                padding: 30px 20px;
             }
 
-            .header h1 {
+            .logo h1 {
                 font-size: 2em;
             }
 
-            .app-grid {
-                grid-template-columns: 1fr;
+            .menu-title {
+                font-size: 1.1em;
             }
 
-            .app-item {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .view-button {
-                margin-left: 0;
-                margin-top: 15px;
-                width: 100%;
-            }
-
-            .modal-content {
-                margin: 10% 5%;
-                padding: 20px;
+            .menu-icon {
+                font-size: 1.5em;
+                margin-right: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <h1>📱 Apk Premium By Sky Store</h1>
-            <p>Premium App Murah dan Terpercaya</p>
+    <div class="menu-container">
+        <div class="logo">
+            <h1>🛍️ My Store</h1>
+            <p>Pilih Menu Toko</p>
         </div>
 
-        <div class="app-grid">
-            <div class="app-item" onclick="openModal('alight')">
-                <div class="app-content">
-                    <div class="app-name">Alight Motion</div>
-                    <div class="app-desc">Video & Animation Editor</div>
+        <div class="menu-list">
+            <a href="Menu/Premiumapp.html" class="menu-item">
+                <div class="menu-icon">📱</div>
+                <div class="menu-content">
+                    <div class="menu-title">Premium App</div>
+                    <div class="menu-description">Tempat Membeli Akun Premium</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
+                <div class="menu-arrow">→</div>
+            </a>
 
-            <div class="app-item" onclick="openModal('netflix')">
-                <div class="app-content">
-                    <div class="app-name">Netflix</div>
-                    <div class="app-desc">Streaming Movies & Series</div>
+            <a href="Menu/Robux.html" class="menu-item">
+                <div class="menu-icon">R$</div>
+                <div class="menu-content">
+                    <div class="menu-title">Robux</div>
+                    <div class="menu-description">Tempat membeli robux via gamepass</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
+                <div class="menu-arrow">→</div>
+            </a>
 
-            <div class="app-item" onclick="openModal('viu')">
-                <div class="app-content">
-                    <div class="app-name">Viu</div>
-                    <div class="app-desc">Asian Drama & Variety</div>
+            <a href="categories.html" class="menu-item">
+                <div class="menu-icon">🏷️</div>
+                <div class="menu-content">
+                    <div class="menu-title">Kategori</div>
+                    <div class="menu-description">Jelajahi berdasarkan kategori</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
+                <div class="menu-arrow">→</div>
+            </a>
 
-            <div class="app-item" onclick="openModal('spotify')">
-                <div class="app-content">
-                    <div class="app-name">Spotify</div>
-                    <div class="app-desc">Music Streaming</div>
+            <a href="cart.html" class="menu-item">
+                <div class="menu-icon">🛒</div>
+                <div class="menu-content">
+                    <div class="menu-title">Keranjang</div>
+                    <div class="menu-description">Lihat item di keranjang</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
+                <div class="menu-arrow">→</div>
+            </a>
 
-            <div class="app-item" onclick="openModal('youtube')">
-                <div class="app-content">
-                    <div class="app-name">Apple Music</div>
-                    <div class="app-desc">Music Streaming</div>
+            <a href="orders.html" class="menu-item">
+                <div class="menu-icon">📋</div>
+                <div class="menu-content">
+                    <div class="menu-title">Pesanan Saya</div>
+                    <div class="menu-description">Riwayat pembelian</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
+                <div class="menu-arrow">→</div>
+            </a>
 
-            <div class="app-item" onclick="openModal('disney')">
-                <div class="app-content">
-                    <div class="app-name">Disney+</div>
-                    <div class="app-desc">Movies & Originals</div>
+            <a href="profile.html" class="menu-item">
+                <div class="menu-icon">👤</div>
+                <div class="menu-content">
+                    <div class="menu-title">Profil</div>
+                    <div class="menu-description">Pengaturan akun</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
+                <div class="menu-arrow">→</div>
+            </a>
 
-            <div class="app-item" onclick="openModal('canva')">
-                <div class="app-content">
-                    <div class="app-name">Canva Pro</div>
-                    <div class="app-desc">Design Platform</div>
+            <a href="contact.html" class="menu-item">
+                <div class="menu-icon">📞</div>
+                <div class="menu-content">
+                    <div class="menu-title">Hubungi Kami</div>
+                    <div class="menu-description">Layanan pelanggan</div>
                 </div>
-                <button class="view-button">Lihat</button>
-            </div>
-
-            <div class="app-item" onclick="openModal('vidio')">
-                <div class="app-content">
-                    <div class="app-name">Vidio Premium</div>
-                    <div class="app-desc">Indonesian Streaming</div>
-                </div>
-                <button class="view-button">Lihat</button>
-            </div>
-
-            <div class="app-item" onclick="openModal('wetv')">
-                <div class="app-content">
-                    <div class="app-name">WeTV</div>
-                    <div class="app-desc">Asian Content</div>
-                </div>
-                <button class="view-button">Lihat</button>
-            </div>
-        </div>
-
-        <div class="contact-section">
-            <a href="https://wa.me/6285929809036?text=Halo%20Admin%20Sky%20Store,%20saya%20ingin%20beli%20akun%20premium" target="_blank" class="contact-btn">Contact Owner 💬</a>
-        </div>
-
-        <div class="footer">
-            <p>© 2025 Sky Store -- use dekstop mode for better view</p>
+                <div class="menu-arrow">→</div>
+            </a>
         </div>
     </div>
-
-    <!-- Modals -->
-    <div class="modal" id="modal-alight">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('alight')">&times;</span>
-            <h2>Alight Motion</h2>
-            <div class="divider">♦────♣────♦</div>
-            <p>♪ 1 Tahun Sharing : 5k</p>
-            <p>♪ 1 Tahun Privat : 7k</p>
-            <div class="notes">
-                ♠ Notes ♠<br>
-                - Sharing only acc seller<br>
-                - Private acc seller / buyer
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-netflix">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('netflix')">&times;</span>
-            <h2>♣ Netflix ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p><strong>Harian & Mingguan</strong></p>
-            <p>♪ 1 Hari 1P1U : 5k</p>
-            <p>♪ 3 Hari 1P1U : 6k</p>
-            <p>♪ 7 Hari 1P1U : 12k</p>
-            <p>♪ 1 Hari 1P2U : 5k</p>
-            <p>♪ 3 Hari 1P2U : 7k</p>
-            <p>♪ 7 Hari 1P2U : 15k</p>
-            <p><strong>Bulanan 1P1U</strong></p>
-            <p>♪ 1 Bulan : 25k</p>
-            <p>♪ 2 Bulan : 44k</p>
-            <p>♪ 3 Bulan : 65k</p>
-            <p><strong>Bulanan 1P2U</strong></p>
-            <p>♪ 1 Bulan : 17k</p>
-            <p>♪ 2 Bulan : 34k</p>
-            <p>♪ 3 Bulan : 50k</p>
-            <p><strong>Semi dua device</strong></p>
-            <p>♪ 1 Minggu : 20k</p>
-            <p>♪ 1 Bulan : 32k</p>
-            <p>♪ 2 Bulan : 60k</p>
-            <p>♪ 3 Bulan : 85k</p>
-            <div class="notes">
-                Notes:<br>
-                - Jangan sering login & logout<br>
-                - Jangan otak-atik akun<br>
-                - Ini versi Blackmarket, jadi bisa saja ada kendala
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-viu">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('viu')">&times;</span>
-            <h2>♣ VIU ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p>ᰔ 1 Bulan Privat : 2K</p>
-            <p>ᰔ 3 Bulan Privat : 4k</p>
-            <p>ᰔ 1 Tahun Privat : 8k</p>
-            <div class="notes">
-                Notes:<br>
-                - Bergaransi (S&K berlaku)
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-spotify">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('spotify')">&times;</span>
-            <h2>♣ Spotify ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p>♪ 1 Bulan FamPlan : 20k</p>
-            <p>♪ 1 Bulan Student : 17k</p>
-            <p>♪ 1 Bulan Student nogar: 13k</p>
-            <div class="notes">
-                Notes:<br>
-                - Bisa untuk IOS & Android
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-youtube">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('youtube')">&times;</span>
-            <h2>♣ Apple Music ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p><strong>Family Plan</strong></p>
-            <p>♪ 1 Bulan : 8k</p>
-            <p><strong>Individual Plan</strong></p>
-            <p>♪ 1 Bulan : 13k</p>
-            <p><strong>Family Head</strong></p>
-            <p>♪ 1 Bulan : 12K </p>
-            <p>♪ 3 Bulan : 32K </p>
-            <div class="notes">
-                Notes:<br>
-                - FamHead Bisa Invit3 5 Anggota<br>
-                - FamPlan Maksimal Join 2×<br>
-                - Apple ID Limit? -- No Reff!
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-disney">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('disney')">&times;</span>
-            <h2>♣ Disney+ Hotstar ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p>♪ 1 Bulan Premium : 8k</p>
-            <p>♪ 3 Bulan Premium : 22k</p>
-            <p>♪ 6 Bulan Premium : 40k</p>
-            <p>♪ 1 Tahun Premium : 75k</p>
-            <div class="notes">
-                Notes:<br>
-                - 4 devices<br>
-                - Quality HD/4K<br>
-                - All content unlocked
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-canva">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('canva')">&times;</span>
-            <h2>♣ Canva Pro ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p>♪ 1 Bulan : 5k</p>
-            <p>♪ 3 Bulan : 10k</p>
-            <p>♪ 6 Bulan : 15k</p>
-            <p>♪ 1 Tahun : 20K</p>
-            <p>♪ LifeTime : 23K</p>
-            <div class="notes">
-                Notes:<br>
-                - LifeTime Garansi 6 Bulan<br>
-                - Durasi Di atas 1 Bulan Renew Tiap Bulan<br>
-                - Send Email Cust<br>
-                - LifeTime Tidak bisa di tambah dengan design
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-vidio">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('vidio')">&times;</span>
-            <h2>♣ Vidio Premium ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p>♪ 1 Bulan : 12k</p>
-            <p>♪ 3 Bulan : 33k</p>
-            <p>♪ 6 Bulan : 62k</p>
-            <div class="notes">
-                Notes:<br>
-                - Akun Limit/Kelock NogGar!<br>
-                - Share No Login Tv,3U Boleh<br>
-                - Membeli = Setuju
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-wetv">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('wetv')">&times;</span>
-            <h2>♣ WeTV ♣</h2>
-            <div class="divider">♦────♠────♦</div>
-            <p>♪ 1 Bulan : 12k</p>
-            <p>♪ 3 Bulan : 33k</p>
-            <p>♪ 6 Bulan : 62k</p>
-            <div class="notes">
-                Notes:<br>
-                - Akun Limit/Kelock NogGar!<br>
-                - Share No Login Tv,3U Boleh<br>
-                - Membeli = Setuju
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openModal(app) {
-            document.getElementById('modal-' + app).style.display = 'block';
-        }
-
-        function closeModal(app) {
-            document.getElementById('modal-' + app).style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        }
-    </script>
 </body>
 </html>
